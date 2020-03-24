@@ -24,5 +24,4 @@ step-production:
   only:
     - master
   script:
-    - docker-compose -f docker-compose.yml build --no-cache
-    - docker-compose -f docker-compose.yml up -d
+    - docker-compose up -d --build
