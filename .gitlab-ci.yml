@@ -1,5 +1,5 @@
 image: docker
-  entrypoint: [""]
+
 services:
     - docker:dind
 
