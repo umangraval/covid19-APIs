@@ -13,14 +13,16 @@ test:
       - master
     script:
       - echo tests performed successfully
-
-deploy:
-    stage: deploy
-    only:
-      - master
-    script:
-      - sudo apt-get install -y python-pip
-      - pip install docker-compose
-      - docker-compose up -d --build
-    environment: master
-    when: manual
+step-production:
+  stage: deploy
+  before_script:
+    - export DYNAMIC_ENV_VAR=PRODUCTION
+  only:
+    - master
+  script:
+    - echo setting up env $DYNAMIC_ENV_VAR
+    - sudo apt-get install -y python-pip
+    - sudo pip install docker-compose
+    - sudo docker image prune -f
+    - sudo docker-compose -f docker-compose.yml build --no-cache
+    - sudo docker-compose -f docker-compose.yml up -d
