@@ -1,5 +1,5 @@
 image: docker
-
+  entrypoint: [""]
 services:
     - docker:dind
 
@@ -19,7 +19,7 @@ step-production:
     - docker info
     - apk update
     - apk upgrade
-    - apk add python python-dev py-pip build-base
+    - apk add python python-dev py-pip build-base libffi-dev openssl-dev
     - pip install docker-compose    
   only:
     - master
