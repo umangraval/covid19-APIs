@@ -3,16 +3,6 @@ services:
   web:
     build: './flaskapp'
     restart: always
+    ports: 
+      - "8001:8001"
 
-    nginx:
-        build: './nginx'
-        container_name: nginx
-        environment:
-            - SERVER_NAME=corona.camcann.com
-        ports:
-            - "80:80"
-        restart: always
-
-networks:
-    default:
-        driver: bridge
