@@ -16,14 +16,13 @@ test:
 step-production:
   stage: deploy
   before_script:
-    - export DYNAMIC_ENV_VAR=PRODUCTION
-    - pip install docker-compose
+    - docker info
+    - apk update
+    - apk upgrade
+    - apk add python python-dev py-pip build-base
+    - pip install docker-compose    
   only:
     - master
   script:
-    - echo setting up env $DYNAMIC_ENV_VAR
-    - apt-get install -y python-pip
-    - pip install docker-compose
-    - docker image prune -f
     - docker-compose -f docker-compose.yml build --no-cache
     - docker-compose -f docker-compose.yml up -d
