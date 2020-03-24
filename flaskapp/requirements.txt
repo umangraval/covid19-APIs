@@ -1,8 +1,8 @@
 instabot
 schedule 
-glob
+glob2
 Flask
 flask_restful
 requests
-
+googletrans
 
