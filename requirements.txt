@@ -1,4 +1,8 @@
 instabot
 schedule 
 glob
-os
+Flask
+flask_restful
+requests
+
+

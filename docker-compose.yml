@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    build: './'
+    restart: always
+
+nginx:
+    build: './nginx'
+    container_name: nginx
+    environment:
+        - SERVER_NAME=corona.camcann.com
+    ports:
+        - "80:80"
+    restart: always
+
+networks:
+    default:
+        driver: bridge

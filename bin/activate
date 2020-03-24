@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='/home/umang/bot'
+VIRTUAL_ENV='/home/umang/Documents/camcann/api_management'
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/home/umang/bot"
+$VIRTUAL_ENV = r"/home/umang/Documents/camcann/api_management"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]
