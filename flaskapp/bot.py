@@ -1,3 +1,4 @@
+# - *- coding: utf- 8 - *-
 from instabot import Bot
 import schedule 
 import time
