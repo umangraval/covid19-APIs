@@ -14,19 +14,19 @@ import urllib3
 if __name__ == "__main__":
     # Load the JSON File and Fetch the Data
     http = urllib3.PoolManager()
-    r = http.request('GET', 'http://corona.camcann.com/stats')
+    r = http.request('GET', 'https://api.rootnet.in/covid19-in/stats/latest')
     data =  json.loads(r.data.decode('utf-8'))
     new = pd.DataFrame.from_dict(data['data']['regional'])
-
+    print(new.columns)
     # Including the Ladakh UT stats along with Jammu and Kashmir Region Only and other Mofifications
-    for x in new.columns[:-1]:
+    for x in new.columns[1:]:
         new.loc[new['loc'] == 'Jammu and Kashmir',x] =   int(new.loc[new['loc'] == 'Jammu and Kashmir'][x].values + new.loc[new['loc'] == 'Ladakh'][x].values)
     new.drop(new[new['loc'] == 'Ladakh'].index, inplace = True)
     new.loc[new['loc'] == 'Telengana', 'loc'] = 'Telangana'
     new.loc[new['loc'] == 'Jammu and Kashmir', 'loc'] = 'Jammu & Kashmir'
     new.reset_index(level=0, inplace=True)
     new.drop('index', axis = 1,inplace = True)
-    new.columns = ['confirmedCasesForeign', 'confirmedCasesIndian', 'deaths', 'discharged','st_nm']
+    new.columns = ['st_nm', 'confirmedCasesIndian', 'confirmedCasesForeign', 'discharged','deaths']
     states = list(new['st_nm'])
 
 

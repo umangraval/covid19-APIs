@@ -25,30 +25,45 @@ accounts = {
 def upload_photo():
     os.system("python map_generator.py")                 
     try:
-    for key, value in accounts.items():
-        print(key,value)
-        bot.login(username=key,password="CoronaCann09")
-        listofimgs = glob.glob("./Posts/*")
-        img_path = listofimgs[0]
-        bot.upload_photo(img_path,caption=value)
-        to_remove_path = img_path+".REMOVE_ME"
-        os.remove(to_remove_path)
-        bot.logout(username=key,password="CoronaCann09")
+    	for key, value in accounts.items():
+        	print(key,value)
+        	bot.login(username=key,password="CoronaCann09")
+        	listofimgs = glob.glob("./Posts/*")
+        	img_path = listofimgs[0]
+        	bot.upload_photo(img_path,caption=value)
+        	to_remove_path = img_path+".REMOVE_ME"
+        	os.remove(to_remove_path)
+        	bot.logout(username=key,password="CoronaCann09")
     except:
         print("err_msg")
 
-times = ['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00']
+# times = ['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00']
 # Task scheduling 
 
 schedule.every().day.at("00:00").do(upload_photo) 
+schedule.every().day.at("01:00").do(upload_photo) 
+schedule.every().day.at("02:00").do(upload_photo) 
 schedule.every().day.at("03:00").do(upload_photo) 
+schedule.every().day.at("04:00").do(upload_photo) 
+schedule.every().day.at("05:00").do(upload_photo) 
 schedule.every().day.at("06:00").do(upload_photo) 
+schedule.every().day.at("07:00").do(upload_photo)  
+schedule.every().day.at("08:00").do(upload_photo) 
 schedule.every().day.at("09:00").do(upload_photo) 
+schedule.every().day.at("10:00").do(upload_photo) 
+schedule.every().day.at("11:00").do(upload_photo) 
 schedule.every().day.at("12:00").do(upload_photo) 
-schedule.every().day.at("15:00").do(upload_photo) 
+schedule.every().day.at("13:00").do(upload_photo) 
+schedule.every().day.at("14:00").do(upload_photo) 
+schedule.every().day.at("15:00").do(upload_photo)  
+schedule.every().day.at("16:00").do(upload_photo) 
+schedule.every().day.at("17:00").do(upload_photo) 
 schedule.every().day.at("18:00").do(upload_photo) 
+schedule.every().day.at("19:00").do(upload_photo) 
+schedule.every().day.at("20:00").do(upload_photo) 
 schedule.every().day.at("21:00").do(upload_photo)  
-
+schedule.every().day.at("22:00").do(upload_photo) 
+schedule.every().day.at("23:00").do(upload_photo) 
 # # # Loop so that the scheduling task 
 # # # keeps on running all time. 
 while True: 
