@@ -13,3 +13,5 @@ Image
 opencv-python
 urllib3
 descartes
+pandas
+matplotlib

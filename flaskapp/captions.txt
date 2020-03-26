@@ -35,14 +35,4 @@ Urdu:  وزارت صحت اور کنبہ بہبود حکومت ہند کے مط�
 
 HashTags
 
-#coronavirus 
-
-#5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward #PrayersForCoronaFreeWorld #Social_Distancing 
-#coronavirusoutbreak #COVID #FlattenTheCurve
-#SwasthaBharat #HelpUsToHelpYou #COVID19india #HealthForAll #CoronaOutbreak #pandemic #coronapocalypse 
-#IndiaFightCorona #JanataCurfew #StayAtHome 
-
-#covered #StayHomeSaveLives  #Savelives #CoronaVirusPandemic 
-
-#handwashing, #SafeHands, #HandWashChallenge and #WashYourHands.
-
+#coronavirus #5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward #PrayersForCoronaFreeWorld #Social_Distancing #coronavirusoutbreak #COVID #FlattenTheCurve #SwasthaBharat #HelpUsToHelpYou #COVID19india #HealthForAll #CoronaOutbreak #pandemic #coronapocalypse #IndiaFightCorona #JanataCurfew #StayAtHome #covered #StayHomeSaveLives  #Savelives #CoronaVirusPandemic #handwashing #SafeHands #HandWashChallenge #WashYourHands

@@ -97,6 +97,6 @@ if __name__ == "__main__":
     map = cv2.imread('map.png')
     map = cv2.resize(map, (image.shape[0], image.shape[1]))
     final = image + map
-    langs = ['english','hindi','telugu','marathi','kannada','guj','bengali','urdu','tamil','malayalam']
+    langs = ['english','telugu','bengali','tamil','malayalam']
     for lan in langs:
         cv2.imwrite('./Posts/Final_'+lan+'.jpg',final)
