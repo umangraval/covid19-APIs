@@ -3,10 +3,19 @@ from instabot import Bot
 import schedule 
 import time
 import glob, os
+import requests, json
+
+url = "https://api.ritekit.com/v1/search/trending?green=1&corona=1"
+hashtag = []
+response = requests.request("GET", url)
+data = json.loads(response.text)
+for hasht in data['tags']:
+  hashtag.append("#"+hasht['tag'])
+hashtag = " ".join(hashtag)
 
 bot=Bot()
 langs = ['english','telugu','bengali','tamil','malayalam']
-hashtag = '#coronavirus #5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward #PrayersForCoronaFreeWorld #Social_Distancing #coronavirusoutbreak #COVID #FlattenTheCurve #SwasthaBharat #HelpUsToHelpYou #COVID19india #HealthForAll #CoronaOutbreak #pandemic #coronapocalypse #IndiaFightCorona #JanataCurfew #StayAtHome #covered #StayHomeSaveLives  #Savelives #CoronaVirusPandemic #handwashing'
+# hashtag = '#coronavirus #5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward #PrayersForCoronaFreeWorld #Social_Distancing #coronavirusoutbreak #COVID #FlattenTheCurve #SwasthaBharat #HelpUsToHelpYou #COVID19india #HealthForAll #CoronaOutbreak #pandemic #coronapocalypse #IndiaFightCorona #JanataCurfew #StayAtHome #covered #StayHomeSaveLives  #Savelives #CoronaVirusPandemic #handwashing'
 
 accounts = {
     'covid.ai': 'Statewise covid19 incidences as per ministry of health and welfare government of india\n'+hashtag,
