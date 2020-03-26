@@ -6,3 +6,10 @@ flask_restful
 requests
 googletrans
 
+numpy
+seaborn
+geopandas
+Image
+opencv-python
+urllib3
+descartes

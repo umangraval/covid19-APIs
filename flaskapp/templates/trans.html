@@ -1,5 +1,16 @@
 <html>
 <body>
-<h2> Enter Caption </h2>
+<h2> Captions </h2>
+<form method="post" action="/translate">
+<input type="text" name="text">
+<input type="submit" value="Translate">
+</form>
+Wait for the translation
+{% if captions %}
+{% for key, value in captions.items() %}
+<h4> {{ key }} </h4>
+{{ value }}
+{% endfor %}
+{% endif %}
 </body>
 </html>

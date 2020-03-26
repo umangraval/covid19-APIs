@@ -2,20 +2,23 @@ from flask import render_template, Flask, request, json
 from googletrans import Translator
 import requests
 translator = Translator()
-    
+
 app = Flask(__name__)
 
+langs = ['gu','bn','hi','kn','ta','te','en']
 @app.route('/translate', methods=['POST', 'GET']) 
 def translate():
     if request.method == 'POST':
         text = request.form['text']
-        lan = request.form['lan']
-        trans = []
-        translator.translate(text, dest=lan)
-        trans.append(t.text)
-        translated = ' '.join(trans)
-        # return translated
-        return render_template('trans.html', data=translated) 
+        captions = {}
+        for lan in langs:
+          trans = []
+          for word in text.split(' '):
+            t = translator.translate(word, dest=lan)
+            trans.append(t.text)
+          translated = ' '.join(trans)
+          captions[lan] = translated
+        return render_template('trans.html', captions=captions) 
     else:
         return render_template('trans.html')
 
