@@ -25,3 +25,4 @@ step-production:
     - master
   script:
     - docker-compose up -d --build
+  when: manual
