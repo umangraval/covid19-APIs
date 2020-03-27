@@ -1,4 +1,9 @@
-# - *- coding: utf- 8 - *-
+# -*- coding: utf-8 -*-
+import sys
+defaultencoding = 'utf-8'
+if sys.getdefaultencoding() != defaultencoding:
+    reload(sys)
+    sys.setdefaultencoding(defaultencoding)
 from instabot import Bot
 import schedule 
 import time
@@ -16,7 +21,6 @@ hashtag = " ".join(hashtag)
 bot=Bot()
 langs = ['english','telugu','bengali','tamil','malayalam']
 # hashtag = '#coronavirus #5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward #PrayersForCoronaFreeWorld #Social_Distancing #coronavirusoutbreak #COVID #FlattenTheCurve #SwasthaBharat #HelpUsToHelpYou #COVID19india #HealthForAll #CoronaOutbreak #pandemic #coronapocalypse #IndiaFightCorona #JanataCurfew #StayAtHome #covered #StayHomeSaveLives  #Savelives #CoronaVirusPandemic #handwashing'
-
 accounts = {
     'covid.ai': 'Statewise covid19 incidences as per ministry of health and welfare government of india\n'+hashtag,
     'covid.ai_telugu': 'భారతదేశం యొక్క ఆరోగ్య మరియు కుటుంబ సంక్షేమ ప్రభుత్వ మంత్రిత్వ శాఖ ప్రకారం రాష్ట్రవ్యాప్తంగా కోవిడ్ 19 సంఘటనలు\n'+hashtag,
