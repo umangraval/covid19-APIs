@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-# - *- coding: utf-8 - *-
-=======
 # -*- coding: utf-8 -*-
 import sys
 defaultencoding = 'utf-8'
 if sys.getdefaultencoding() != defaultencoding:
     reload(sys)
     sys.setdefaultencoding(defaultencoding)
->>>>>>> bc04b7451f9200f9f4b76974aad94dd6eaa197d3
 from instabot import Bot
 import schedule 
 import time
@@ -26,10 +22,7 @@ hashtag = " ".join(hashtag)
 bot=Bot()
 langs = ['english','telugu','bengali','tamil','malayalam']
 # hashtag = '#coronavirus #5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward #PrayersForCoronaFreeWorld #Social_Distancing #coronavirusoutbreak #COVID #FlattenTheCurve #SwasthaBharat #HelpUsToHelpYou #COVID19india #HealthForAll #CoronaOutbreak #pandemic #coronapocalypse #IndiaFightCorona #JanataCurfew #StayAtHome #covered #StayHomeSaveLives  #Savelives #CoronaVirusPandemic #handwashing'
-<<<<<<< HEAD
 hashtag = hashtag + "#coronavirus #5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward"
-=======
->>>>>>> bc04b7451f9200f9f4b76974aad94dd6eaa197d3
 accounts = {
     'covid.ai_telugu': 'భారతదేశం యొక్క ఆరోగ్య మరియు కుటుంబ సంక్షేమ ప్రభుత్వ మంత్రిత్వ శాఖ ప్రకారం రాష్ట్రవ్యాప్తంగా కోవిడ్ 19 సంఘటనలు\n'+hashtag,
     'covid.ai_bengali': 'ভারতের স্বাস্থ্য ও পরিবার কল্যাণ মন্ত্রনালয় অনুসারে রাষ্ট্রীয়ভাবে কোভিড ১৯ টি ঘটনা\n'+hashtag,
