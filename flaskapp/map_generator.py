@@ -32,7 +32,6 @@ if __name__ == "__main__":
 
     # ## Initialize the Visualization and Read the Template
     image = cv2.imread('template2.png')
-    # image = cv2.resize(image, (1125,1125))
     image[np.where((image==[255,255,255]).all(axis=2))] = [0,0,0];
     sns.set(style = 'whitegrid', palette = 'pastel', color_codes = True)
     figsize = (image.shape[0]/96,image.shape[1]/96)
@@ -46,7 +45,7 @@ if __name__ == "__main__":
     sdf.loc[sdf['st_nm'] == 'NCT of Delhi','st_nm'] = 'Delhi'
     sdf = sdf.iloc[1:,:]
     sdf.drop([16], inplace = True)
-    sdf.plot(cmap='viridis', scheme='quantiles')
+    sdf.boundary.plot(color = 'black')
 
     ssdf = pd.DataFrame(sdf[sdf['st_nm'].isin(states)])
     ssdf.reset_index(level=0, inplace=True)
@@ -72,6 +71,8 @@ if __name__ == "__main__":
     y_list = list(ssdf['centroid_y'])
     confirmedCases = list(ssdf['confirmedCases'])
 
+    ## Setting the Bomb marker
+    bomb = cv2.imread('')
 
 
 
@@ -80,23 +81,29 @@ if __name__ == "__main__":
     for i,st in enumerate(st_names):
         # print(st)
         if st == 'Punjab':
-            plt.text(x_list[i]-2.5,y_list[i]-0.2,st, fontsize=10,fontweight = 'extra bold', color = 'red')
+            plt.text(x_list[i]-1.5,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
         elif st == "Chandigarh":
-            plt.text(x_list[i]+0.5,y_list[i],st, fontsize=10,fontweight = 'extra bold', color = 'red')
+            plt.text(x_list[i]+0.5,y_list[i],confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
         elif st == 'Himachal Pradesh':
-            plt.text(x_list[i]+0.3,y_list[i]-0.2,st, fontsize=10,fontweight = 'extra bold', color = 'red')
+            plt.text(x_list[i]+0.3,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
         elif st == 'Haryana':
-            plt.text(x_list[i]-2.75,y_list[i]-0.2,st, fontsize=10,fontweight = 'extra bold', color = 'red')
+            plt.text(x_list[i]-1.5,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
         elif st == 'Kerala':
-            plt.text(x_list[i]-2.25,y_list[i]-0.2,st, fontsize=10,fontweight = 'extra bold', color = 'red')
+            plt.text(x_list[i]-2.25,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
         else:
-            plt.text(x_list[i]+0.5,y_list[i]-0.2,st, fontsize=10,fontweight = 'extra bold', color = 'red')
-        plt.scatter(x_list[i],y_list[i],c = 'black', s = 200, marker=r"$ {} $".format(confirmedCases[i]))
-
+            plt.text(x_list[i]+0.5,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
+        plt.scatter(x_list[i],y_list[i],c = 'black', s = 100, marker='o')
+    mine = cv2.imread('map final 2.png')
+    # mine[np.where((image==[255,255,255]).all(axis=2))] = [0,0,0];
     plt.savefig('map.png')
     map = cv2.imread('map.png')
     map = cv2.resize(map, (image.shape[0], image.shape[1]))
-    final = image + map
+    map[np.where((image==[255,255,255]).all(axis=2))] = [0,0,0];
+    mine = cv2.resize(mine, (image.shape[0], image.shape[1]))
+    alpha = 0.4
+    added_image = cv2.addWeighted(mine[:,:,:],alpha,map[:,:,:],1-alpha,0)
+    final = image + added_image
     langs = ['english','telugu','bengali','tamil','malayalam']
     for lan in langs:
         cv2.imwrite('./Posts/Final_'+lan+'.jpg',final)
+
