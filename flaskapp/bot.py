@@ -17,8 +17,17 @@ import urllib3, random
 
 # Trending Hashtags
 allhashtags = "#love #fashion #photooftheday #beautiful #art #happy #cute #picoftheday #photography #follow #tbt #followme #like4like #nature #travel #repost #style #summer #instagram #instadaily #selfie #friends #girl #fitness #fun #me #beauty #instalike #smile #family #likeforlike #life #photo #music #ootd #follow4follow #igers #amazing #makeup #nofilter #dog #model #beach #sunset #instamood #followforfollow #foodporn #motivation #l4l #sky #design #f4f #lifestyle #vscocam #cat #hair #bestoftheday #vsco #handmade #gym #dogsofinstagram #instapic #drawing #pretty #girls #flowers #artist #funny #wedding #party #instafood #photographer #inspiration #lol #cool #swag #likeforlikes #workout #fit #baby #healthy #likeforfollow #yummy #blackandwhite #christmas #foodie #moda #black #holiday #home #sea #pink #blue #london #winter #landscape #night #puppy #work #tattoo"
-hashtags = random.sample(allhashtags.split(" "), 30)
-hashtag = ' '.join(hashtags)
+hashtag_en = ' '.join(random.sample(allhashtags.split(" "), 30))
+hashtag_ta = ' '.join(random.sample(allhashtags.split(" "), 30))
+hashtag_te = ' '.join(random.sample(allhashtags.split(" "), 30))
+hashtag_bn = ' '.join(random.sample(allhashtags.split(" "), 30))
+hashtag_mn = ' '.join(random.sample(allhashtags.split(" "), 30))
+print("en: "+hashtag_en)
+print("ta: "+hashtag_ta)
+print("te: "+hashhashtag_te)
+print("bn: "+hashtag_bn)
+print("mn: "+hashtag_mn)
+
 # URL_en = "http://best-hashtags.com/hashtag/coronavirus/"
 # URL_tn = "http://best-hashtags.com/hashtag/tamil/"
 # URL_te = "http://best-hashtags.com/hashtag/telugu/"
@@ -58,11 +67,11 @@ text = "Get latest stats of covid19 on @covid.ai. Maintain social distancing and
 bot=Bot()
 langs = ['english','telugu','bengali','tamil','malayalam']
 accounts = {
-    'covid.ai_telugu': 'పొందండి తాజా గణాంకాలు ఆఫ్ covid19 పై @covid.ai_telugu @covid.ai. నిర్వహించడానికి సామాజిక దూరమవుతున్న మరియు బస నిర్భంధానికి. మూలం: covid19india.org\nగణాంకాలు లో భారతదేశం'+stats+hashtag,
-    'covid.ai_bengali': 'পাওয়া সর্বশেষ পরিসংখ্যান এর covid19 চালু @covid.ai_bengali @covid.ai। বজায় রাখা সামাজিক দুরত্ব এবং থাকা আলাদা। উৎস : covid19india.org\nপরিসংখ্যান ভিতরে ভারত'+stats+hashtag,
-    'covid.ai_tamil': 'பெறு சமீபத்திய புள்ளிவிவரங்கள் இன் covid19 மீது @covid.ai_tamil @covid.ai. பராமரிக்கவும் சமூக இடைவெளியும் மற்றும் தங்க தனிமைப்படுத்தப்பட்ட. மூல : covid19india.org\nபுள்ளியியல் இல் இந்தியா'+stats+hashtag,
-    'covid.ai_malayalam': '@covid.ai_malayalam @covid.ai- ൽ covid19- ന്റെ ഏറ്റവും പുതിയ സ്ഥിതിവിവരക്കണക്കുകൾ നേടുക. സാമൂഹിക അകലം പാലിക്കുക. ഉറവിടം: covid19india.org\nഇന്ത്യയിലെ സ്ഥിതിവിവരക്കണക്കുകൾ'+stats+hashtag,
-    'covid.ai': 'Get latest stats of covid19 on @covid.ai. Maintain social distancing and stay quarantined.\nSource : covid19india.org\nStatistics in India'+stats+hashtag
+    'covid.ai_telugu': 'పొందండి తాజా గణాంకాలు ఆఫ్ covid19 పై @covid.ai_telugu @covid.ai. నిర్వహించడానికి సామాజిక దూరమవుతున్న మరియు బస నిర్భంధానికి. మూలం: covid19india.org\nగణాంకాలు లో భారతదేశం'+stats+hashtag_te,
+    'covid.ai_bengali': 'পাওয়া সর্বশেষ পরিসংখ্যান এর covid19 চালু @covid.ai_bengali @covid.ai। বজায় রাখা সামাজিক দুরত্ব এবং থাকা আলাদা। উৎস : covid19india.org\nপরিসংখ্যান ভিতরে ভারত'+stats+hashtag_bn,
+    'covid.ai_tamil': 'பெறு சமீபத்திய புள்ளிவிவரங்கள் இன் covid19 மீது @covid.ai_tamil @covid.ai. பராமரிக்கவும் சமூக இடைவெளியும் மற்றும் தங்க தனிமைப்படுத்தப்பட்ட. மூல : covid19india.org\nபுள்ளியியல் இல் இந்தியா'+stats+hashtag_ta,
+    'covid.ai_malayalam': '@covid.ai_malayalam @covid.ai- ൽ covid19- ന്റെ ഏറ്റവും പുതിയ സ്ഥിതിവിവരക്കണക്കുകൾ നേടുക. സാമൂഹിക അകലം പാലിക്കുക. ഉറവിടം: covid19india.org\nഇന്ത്യയിലെ സ്ഥിതിവിവരക്കണക്കുകൾ'+stats+hashtag_mn,
+    'covid.ai': 'Get latest stats of covid19 on @covid.ai. Maintain social distancing and stay quarantined.\nSource : covid19india.org\nStatistics in India'+stats+hashtag_en
     }
 
 def upload_photo(username):

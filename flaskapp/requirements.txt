@@ -1,5 +1,7 @@
 flask
 googletrans
+igramscraper
+python-firebase
 numpy
 seaborn
 geopandas
