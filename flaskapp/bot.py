@@ -51,8 +51,6 @@ for state in states:
         stats = "\nConfirmed: "+state["confirmed"]+"\nActive: "+state["active"]+"\nRecovered: "+state["recovered"]+"\nDeaths: "+state["deaths"]+"\n"
 
 text = "Get latest stats of covid19 on @covid.ai. Maintain social distancing and stay quarantined.\nSource : covid19india.org\n"
-caption = text + stats + hashtag
-
 
 bot=Bot()
 langs = ['english','telugu','bengali','tamil','malayalam']

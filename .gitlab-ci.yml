@@ -5,7 +5,7 @@ services:
 
 stages:
     - test
-    - deploy
+    - production
 
 test:
     stage: test
@@ -13,16 +13,16 @@ test:
       - master
     script:
       - echo tests performed successfully
-step-production:
-  stage: deploy
-  before_script:
-    - docker info
-    - apk update
-    - apk upgrade
-    - apk add python python-dev py-pip build-base libffi-dev openssl-dev
-    - pip install docker-compose    
-  only:
-    - master
-  script:
-    - docker-compose up -d --build
-  when: manual
+production:   
+    stage: production   
+    before_script: 
+    #generate ssh key   
+      - mkdir -p ~/.ssh     
+      - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa     
+      - chmod 600 ~/.ssh/id_rsa     
+      - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'   
+    script:     
+      - bash .gitlab-deploy.sh   
+    environment:     
+      name: production   
+    when: manual

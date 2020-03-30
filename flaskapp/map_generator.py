@@ -38,6 +38,13 @@ if __name__ == "__main__":
             st["discharged"] = state["recovered"]
             st["deaths"] = state["deaths"]
             newdata["data"]["regional"].append(st)
+
+    # Getting the Summary Stats
+    total = int(newdata['data']['summary']['total'])
+    recovered = int(newdata['data']['summary']['discharged'])
+    death = int(newdata['data']['summary']['deaths'])
+    active = int(total - (recovered + recovered))
+
     new = pd.DataFrame.from_dict(newdata['data']['regional'])
     print('Data Fetched')
 
@@ -51,15 +58,27 @@ if __name__ == "__main__":
 
 
     ## Initialize the Visualization and Read the Template
+
     image = cv2.imread('template2.png')
     image[np.where((image==[255,255,255]).all(axis=2))] = [0,0,0];
+
+    ## English Template
+    image_eng = cv2.imread('template2.png')
+    image_eng[np.where((image_eng==[255,255,255]).all(axis=2))] = [0,0,0];
+    ## Telugu Template
+    image_tel = cv2.imread('TELUGU.png')
+    image_tel = cv2.resize(image_tel, (image_eng.shape[0], image_eng.shape[1]))
+    image_tel[np.where((image_tel==[255,255,255]).all(axis=2))] = [0,0,0];
+
+
     sns.set(style = 'whitegrid', palette = 'pastel', color_codes = True)
-    figsize = (image.shape[0]/96,image.shape[1]/96)
+    figsize = (image_eng.shape[0]/96,image_eng.shape[1]/96)
     sns.set(rc={'figure.figsize':figsize})
 
     # Read the Shape Files
     shp_path = 'Indian_States.shp'
     sdf = gpd.read_file(shp_path)
+    print(sdf)
 
     # Considering only the Mainland India and making modifications in dataframe
     print('Setting up the Map')
@@ -101,19 +120,41 @@ if __name__ == "__main__":
             plt.text(x_list[i]-1.5,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
         elif st == 'Kerala':
             plt.text(x_list[i]-2.25,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
+        elif st == 'West Bengal':
+
+            ## Summary Coordinates
+            rx = x_list[i]
+            ry = y_list[i]
+
+            plt.text(rx,ry-10,'Total Cases          :',fontsize = 17, fontweight = 'extra bold', color = 'red')
+            plt.text(rx,ry-11,'Active Cases        :',fontsize = 17, fontweight = 'extra bold', color = 'red')
+            plt.text(rx,ry-12,'Recovered Cases :',fontsize = 17, fontweight = 'extra bold', color = 'red')
+            plt.text(rx,ry-13,'Deaths                 :',fontsize = 17, fontweight = 'extra bold', color = 'red')
+            plt.text(rx+8.6,ry-10,total,fontsize = 17, fontweight = 'extra bold', color = 'black')
+            plt.text(rx+8.6,ry-11,active,fontsize = 17, fontweight = 'extra bold', color = 'black')
+            plt.text(rx+8.6,ry-12,recovered,fontsize = 17, fontweight = 'extra bold', color = 'black')
+            plt.text(rx+8.6,ry-13,death,fontsize = 17, fontweight = 'extra bold', color = 'black')
+
+            # Mark Number
+            plt.text(x_list[i]+0.5,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
+
+
+
         else:
             plt.text(x_list[i]+0.5,y_list[i]-0.2,confirmedCases[i], fontsize=15,fontweight = 'extra bold', color = 'red')
         plt.scatter(x_list[i],y_list[i],c = 'black', s = 100, marker='o')
 
+
     mine = cv2.imread('map final 2.png')
     plt.savefig('map.png')
     map = cv2.imread('map.png')
-    map = cv2.resize(map, (image.shape[0], image.shape[1]))
-    map[np.where((image==[255,255,255]).all(axis=2))] = [0,0,0];
-    mine = cv2.resize(mine, (image.shape[0], image.shape[1]))
+    map = cv2.resize(map, (image_eng.shape[0], image_eng.shape[1]))
+    map[np.where((image_eng==[255,255,255]).all(axis=2))] = [0,0,0];
+    mine = cv2.resize(mine, (image_eng.shape[0], image_eng.shape[1]))
     alpha = 0.4
     added_image = cv2.addWeighted(mine[:,:,:],alpha,map[:,:,:],1-alpha,0)
-    final = image + added_image
+    final = image_eng + added_image
+    final_tel = image_tel + added_image
     langs = ['english','telugu','bengali','tamil','malayalam']
     for lan in langs:
         cv2.imwrite('./Posts/Final_'+lan+'.jpg',final)
