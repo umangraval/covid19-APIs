@@ -6,3 +6,15 @@ env
 .vscode
 __pycache__
 Posts
+
+sessions
+my_application_log.txt
+autocomment_log.txt
+
+Indian_States.shp  
+instagram-scraper.log
+map.png                 
+my_application_log.txt   
+autocomment_log.txt 
+map_generator.py.save   
+
