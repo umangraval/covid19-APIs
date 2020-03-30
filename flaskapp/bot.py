@@ -24,7 +24,7 @@ hashtag_bn = ' '.join(random.sample(allhashtags.split(" "), 30))
 hashtag_mn = ' '.join(random.sample(allhashtags.split(" "), 30))
 print("en: "+hashtag_en)
 print("ta: "+hashtag_ta)
-print("te: "+hashhashtag_te)
+print("te: "+hashtag_te)
 print("bn: "+hashtag_bn)
 print("mn: "+hashtag_mn)
 
