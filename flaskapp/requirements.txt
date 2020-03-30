@@ -1,3 +1,6 @@
+flask
+googletrans
+requests 
 numpy
 seaborn
 geopandas

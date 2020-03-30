@@ -5,52 +5,82 @@ if sys.getdefaultencoding() != defaultencoding:
     reload(sys)
     sys.setdefaultencoding(defaultencoding)
 from instabot import Bot
-import schedule 
+import schedule
 import time
 import glob, os
 import requests, json
 import shutil
-import requests 
-from bs4 import BeautifulSoup 
-  
-URL = "http://best-hashtags.com/hashtag/indian/"
-r = requests.get(URL) 
-soup = BeautifulSoup(r.content, 'html5lib') 
-hashtag = soup.find('p1').getText()
+import requests
+from bs4 import BeautifulSoup
+import json
+import urllib3
+
+# Trending Hashtags
+URL_en = "http://best-hashtags.com/hashtag/coronavirus/"
+URL_tn = "http://best-hashtags.com/hashtag/tamil/"
+URL_te = "http://best-hashtags.com/hashtag/telugu/"
+URL_mn = "http://best-hashtags.com/hashtag/malayali/"
+URL_bn = "http://best-hashtags.com/hashtag/bengali/"
+
+r_en = requests.get(URL_en) 
+r_tn = requests.get(URL_tn) 
+r_te = requests.get(URL_te) 
+r_mn = requests.get(URL_mn) 
+r_bn = requests.get(URL_bn) 
+
+soup_en = BeautifulSoup(r_en.content, 'html.parser') 
+soup_tn = BeautifulSoup(r_tn.content, 'html.parser') 
+soup_te = BeautifulSoup(r_te.content, 'html.parser') 
+soup_mn = BeautifulSoup(r_mn.content, 'html.parser') 
+soup_bn = BeautifulSoup(r_bn.content, 'html.parser') 
+
+hashtag_en = soup_en.find('p1').getText()
+hashtag_tn = soup_tn.find('p1').getText()
+hashtag_te = soup_te.find('p1').getText()
+hashtag_mn = soup_mn.find('p1').getText()
+hashtag_bn = soup_bn.find('p1').getText()
+
+
+# Statistics
+http = urllib3.PoolManager()
+r = http.request('GET', 'https://api.covid19india.org/data.json')
+data =  json.loads(r.data.decode('utf-8'))
+states = data["statewise"]
+for state in states:
+    if(state["state"] == "Total"):
+        stats = "\nConfirmed: "+state["confirmed"]+"\nActive: "+state["active"]+"\nRecovered: "+state["recovered"]+"\nDeaths: "+state["deaths"]+"\n"
+
+text = "Get latest stats of covid19 on @covid.ai. Maintain social distancing and stay quarantined.\nSource : covid19india.org\n"
+
+
 bot=Bot()
 langs = ['english','telugu','bengali','tamil','malayalam']
-# hashtag = '#coronavirus #5Baje5Minute #JantaCurfew #Covid_19india #CoronaWarriors #ThankYou #ThaliBajao #coronaupdatesindia #IndiaComeTogether #StayInTurnInward #PrayersForCoronaFreeWorld #Social_Distancing #coronavirusoutbreak #COVID #FlattenTheCurve #SwasthaBharat #HelpUsToHelpYou #COVID19india #HealthForAll #CoronaOutbreak #pandemic #coronapocalypse #IndiaFightCorona #JanataCurfew #StayAtHome #covered #StayHomeSaveLives  #Savelives #CoronaVirusPandemic #handwashing'
 accounts = {
-    'covid.ai_telugu': 'భారతదేశం యొక్క ఆరోగ్య మరియు కుటుంబ సంక్షేమ ప్రభుత్వ మంత్రిత్వ శాఖ ప్రకారం రాష్ట్రవ్యాప్తంగా కోవిడ్ 19 సంఘటనలు\n'+hashtag,
-    'covid.ai_bengali': 'ভারতের স্বাস্থ্য ও পরিবার কল্যাণ মন্ত্রনালয় অনুসারে রাষ্ট্রীয়ভাবে কোভিড ১৯ টি ঘটনা\n'+hashtag,
-    'covid.ai_tamil': 'இந்திய சுகாதார அமைச்சகம் மற்றும் குடும்ப நல அரசாங்கத்தின் படி மாநில அளவிலான கோவிட் 19 சம்பவங்கள்\n'+hashtag,
-    'covid.ai_malayalam': 'ആരോഗ്യ മന്ത്രാലയം, ഇന്ത്യയിലെ കുടുംബക്ഷേമ സർക്കാർ എന്നിവ പ്രകാരം സംസ്ഥാനതലത്തിൽ covid19 സംഭവങ്ങൾ\n'+hashtag,
-    'covid.ai': 'Statewise covid19 incidences as per ministry of health and welfare government of india.\n'+hashtag
+    'covid.ai_telugu': 'పొందండి తాజా గణాంకాలు ఆఫ్ covid19 పై @covid.ai_telugu @covid.ai. నిర్వహించడానికి సామాజిక దూరమవుతున్న మరియు బస నిర్భంధానికి. మూలం: covid19india.org\nగణాంకాలు లో భారతదేశం'+stats+hashtag_te,
+    'covid.ai_bengali': 'পাওয়া সর্বশেষ পরিসংখ্যান এর covid19 চালু @covid.ai_bengali @covid.ai। বজায় রাখা সামাজিক দুরত্ব এবং থাকা আলাদা। উৎস : covid19india.org\nপরিসংখ্যান ভিতরে ভারত'+stats+hashtag_bn,
+    'covid.ai_tamil': 'பெறு சமீபத்திய புள்ளிவிவரங்கள் இன் covid19 மீது @covid.ai_tamil @covid.ai. பராமரிக்கவும் சமூக இடைவெளியும் மற்றும் தங்க தனிமைப்படுத்தப்பட்ட. மூல : covid19india.org\nபுள்ளியியல் இல் இந்தியா'+stats+hashtag_tn,
+    'covid.ai_malayalam': '@covid.ai_malayalam @covid.ai- ൽ covid19- ന്റെ ഏറ്റവും പുതിയ സ്ഥിതിവിവരക്കണക്കുകൾ നേടുക. സാമൂഹിക അകലം പാലിക്കുക. ഉറവിടം: covid19india.org\nഇന്ത്യയിലെ സ്ഥിതിവിവരക്കണക്കുകൾ'+stats+hashtag_mn,
+    'covid.ai': 'Get latest stats of covid19 on @covid.ai. Maintain social distancing and stay quarantined.\nSource : covid19india.org\nStatistics in India'+stats+hashtag_en
     }
-    # 'coro.na.tion_urdu': 'وزارت صحت اور کنبہ بہبود حکومت ہند کے مطابق اسٹیٹ وائی کوڈ 19 واقعات\n'+hashtag,
-    # 'coro.na.tion_marathi': 'भारत सरकारच्या आरोग्य व कुटुंब कल्याण मंत्रालयाच्या अनुसार राज्यस्तरीय कोविड 19 घटना\n'+hashtag,
-    # 'coro.nat.tion_kannada': 'ಭಾರತದ ಆರೋಗ್ಯ ಮತ್ತು ಕುಟುಂಬ ಕಲ್ಯಾಣ ಸರ್ಕಾರದ ಸಚಿವಾಲಯದ ಪ್ರಕಾರ ರಾಜ್ಯವ್ಯಾಪಿ ಕೋವಿಡ್ 19 ಘಟನೆಗಳು\n'+hashtag,
-    # 'coro.na.tion_guj': 'ભારત સરકારના આરોગ્ય અને પરિવાર કલ્યાણ મંત્રાલય
-    #  મુજબ રાજ્યવ્યાપી કોવિડ 19 ઘટનાઓ\n'+hashtag,
-    # 'coro.na.tion_hindi': 'राज्यवार covid19 भारत के स्वास्थ्य और परिवार कल्याण सरकार के मंत्रालय के अनुसार\n'+hashtag,
 
-    
-#bot.login(username="carona_stats",password="CamCann")
-def upload_photo():
-    os.system("python map_generator.py")                 
-    try:
-        for key, value in accounts.items():
-            print(key,value)
-            bot.login(username=key,password="CoronaCann09")
-            listofimgs = glob.glob("./Posts/*")
-            img_path = listofimgs[0]
-            bot.upload_photo(img_path,caption=value)
-            to_remove_path = img_path+".REMOVE_ME"
-            os.remove(to_remove_path)
-            # bot.logout(username=key,password="CoronaCann09")
-        # shutil.rmtree('config')
-    except:
-        print("err_msg")
+def upload_photo(username):
+    bot.login(username=username,password="CoronaCann09")
+    listofimgs = glob.glob("./Posts/*")
+    img_path = listofimgs[0]
+    bot.upload_photo(img_path,caption=accounts[username])
+    to_remove_path = img_path+".REMOVE_ME"
+    os.remove(to_remove_path)
+    bot.logout(username=username,password="CoronaCann09")
 
-# Task scheduling 
-upload_photo()
+# Task scheduling
+os.system("python map_generator.py")
+upload_photo("covid.ai")
+time.sleep(5)
+upload_photo("covid.ai_malayalam")
+time.sleep(5)
+upload_photo("covid.ai_bengali")
+time.sleep(5)
+upload_photo("covid.ai_telugu")
+time.sleep(5)
+upload_photo("covid.ai_tamil")
+shutil.rmtree('config')
