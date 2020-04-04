@@ -79,6 +79,7 @@ if __name__ == "__main__":
 
     lang = ['english', 'tamil', 'telugu', 'bangali', 'malayalam']
     for lan in lang:
-        back.save('./Posts/'+lan+'.png')
+        back = back.convert("RGB")
+        back.save('./Posts/'+lan+'.jpg')
     os.replace("./Posts/NEW.png", "./NEW.png")
     print('Images Generated')
