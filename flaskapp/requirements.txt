@@ -10,3 +10,4 @@ opencv-python
 bs4
 urllib3
 descartes
+
