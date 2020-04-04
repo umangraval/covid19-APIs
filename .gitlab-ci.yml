@@ -19,6 +19,6 @@ deploy:
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     script:
-      - ssh covid19@portal.camcann.com "cd api_management && git checkout master && git pull origin master && exit"
+      - ssh -o “StrictHostKeyChecking=no” covid19@portal.camcann.com "cd api_management && git checkout master && git pull origin master && exit"
     only:
       - master
