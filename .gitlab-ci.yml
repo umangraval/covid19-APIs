@@ -11,14 +11,13 @@ test:
 deploy:
     stage: deploy
     before_script:
-      - apt-get update -qq
-      - apt-get install -qq git
-      # Setup SSH deploy keys
-      - 'which ssh-agent || ( apt-get install -qq openssh-client )'
-      - eval $(ssh-agent -s)
-      - ssh-add <(echo "$SSH_PRIVATE_KEY")
-      - mkdir -p ~/.ssh
-      - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - echo "Before script...."
+    - echo $SSH_PRIVATE_KEY
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     script:
       - ssh covid19@portal.camcann.com "cd api_management && git checkout master && git pull origin master && exit"
     only:
