@@ -1,28 +1,28 @@
-image: docker
-
-services:
-    - docker:dind
-
 stages:
     - test
-    - production
-
+    - deploy
+before_script:
+    - apt-get update -qq
+    - apt-get install -qq git
+    # Setup SSH deploy keys
+    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 test:
     stage: test
     only:
       - master
     script:
       - echo tests performed successfully
-production:   
-    stage: production   
-    before_script: 
-    #generate ssh key   
-      - mkdir -p ~/.ssh     
-      - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa     
-      - chmod 600 ~/.ssh/id_rsa     
-      - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'   
-    script:     
-      - bash .gitlab-deploy.sh   
-    environment:     
-      name: production   
-    when: manual
+      
+          
+deploy:
+    stage: deploy
+    environment:
+      url: portal.camcann.com
+    script:
+      - ssh covid19@portal.camcann.com "cd api_management && git checkout master && git pull origin master && exit"
+    only:
+      - master
