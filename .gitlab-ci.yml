@@ -10,8 +10,6 @@ test:
           
 deploy:
     stage: deploy
-    environment:
-      url: portal.camcann.com
     before_script:
       - apt-get update -qq
       - apt-get install -qq git
