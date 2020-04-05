@@ -1,13 +1,2 @@
 flask
 googletrans
-igramscraper
-python-firebase
-numpy
-seaborn
-geopandas
-Image
-opencv-python
-bs4
-urllib3
-descartes
-
