@@ -1,2 +1,4 @@
 flask
 googletrans
+lxml
+bs4
