@@ -21,7 +21,7 @@ deploy:
   script:
     - rsync -avuz --exclude=".*" $CI_PROJECT_DIR $SERVER_USER@$SERVER_DOMAIN:~
     # Non interactive ssh gracefully reloads server
-    - ssh $SERVER_USER@$SERVER_DOMAIN "docker kill $(docker ps -q) && cd api_management && docker-compose up -d --build"
+    - ssh $SERVER_USER@$SERVER_DOMAIN "cd api_management && docker-compose up -d --build"
   only:
     # Trigger deployments only from master branch
     - master

@@ -4,6 +4,7 @@ import requests
 translator = Translator()
 import requests
 from bs4 import BeautifulSoup
+from igramscraper.instagram import Instagram
 
 app = Flask(__name__)
 
@@ -116,6 +117,46 @@ def getITALYStats():
               data.append(region)
   retJSON['data'] = data
   return retJSON
+
+@app.route('/covidai')
+def getigStats():
+  instagram = Instagram()
+  data = { 'account': {}}
+  account = instagram.get_account('covid.ai_tamil')
+  data['account']['id'] = account.identifier
+  data['account']['username'] = account.username
+  data['account']['Full name'] = account.full_name
+  data['account']['Biography'] = account.biography
+  data['account']['Profile pic url'] = account.get_profile_picture_url()
+  data['account']['Number of published posts'] = account.media_count
+  data['account']['Number of followers'] = account.followed_by_count
+  data['account']['Number of follows'] = account.follows_count
+
+  # total_likes = 0
+  # total_comments = 0
+  # coms = []
+  # medias = instagram.get_medias("covid.ai", 1000)
+  # for x in medias:
+  #     total_likes += x.likes_count
+  #     total_comments += x.comments_count
+  # data['comments'] = coms
+  # data['total_likes'] = total_likes
+  # data['total_comments'] = total_comments
+  return data
+  
+@app.route('/coms')
+def getcomments():
+  instagram = Instagram()
+  data = {}
+  coms = []
+  medias = instagram.get_medias("covid.ai_tamil", 1000)
+  for x in medias:
+    comments = instagram.get_media_comments_by_id(x.identifier, 10000)
+    for comment in comments['comments']:
+        coms.append(comment.text)
+  data['comments'] = coms
+  return data
+
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port='8001', debug=True)

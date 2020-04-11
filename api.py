@@ -1,9 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
-website_url = requests.get('https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Italy').text
+website_url = requests.get('https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Germany').text
 soup = BeautifulSoup(website_url,'lxml')
-My_table = soup.find('table',{'class':'wikitable sortable'})
+My_table = soup.find('table',{'class':'wikitable mw-collapsible'})
 retJSON = {}
 data = []
 links = My_table.find_all('tr')
