@@ -5,8 +5,12 @@ translator = Translator()
 import requests
 from bs4 import BeautifulSoup
 from igramscraper.instagram import Instagram
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
+
 
 langs = ['gu','bn','hi','kn','ta','te','en']
 @app.route('/translate', methods=['POST', 'GET']) 
