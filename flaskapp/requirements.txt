@@ -2,3 +2,4 @@ flask
 googletrans
 lxml
 bs4
+igramscraper
