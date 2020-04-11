@@ -23,7 +23,7 @@
 }
 
 body {
-    background-image: url('/static/247.jpg');
+    background-image: url('/api/static/247.jpg');
     color: white;
 }
 
