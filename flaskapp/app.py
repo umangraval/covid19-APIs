@@ -1,3 +1,6 @@
+#!/usr/bin/python
+import change
+
 from flask import render_template, Flask, request, json
 from googletrans import Translator
 import requests
