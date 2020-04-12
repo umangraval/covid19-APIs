@@ -141,16 +141,27 @@ def getigStats():
   data['account']['Number of followers'] = account.followed_by_count
   data['account']['Number of follows'] = account.follows_count
 
-  today = date.today().strftime("%Y-%m-%d")
+  # today = date.today().strftime("%Y-%m-%d")
+  today = '2020-04-13'
   firebse = firebase.FirebaseApplication('https://covidai-1dd78.firebaseio.com/', None)
-  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', '')
-  da = previous.get(today, '')
+  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/-M4jU_aebbK0bGPWBqEL/', '')
+  print(previous)
+  flag = 0
+
+  da = previous[-1].get(today, '')
   if(da):
-    diff = account.followed_by_count - previous[today]
+    diff = account.followed_by_count - previous[-1][today]
     data['account']['diff'] = diff
-  else:
-    result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', today, account.followed_by_count)
-    diff = account.followed_by_count - previous[today]
+    flag = 1
+    if(diff != 0):
+      previous[-1][today] = account.followed_by_count
+      snap = str(len(previous) - 1)
+      result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/-M4jU_aebbK0bGPWBqEL/', snap, {today:previous[-1][today]}) 
+
+  if(flag == 0):
+    previous.append({ today: account.followed_by_count })
+    result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', '-M4jU_aebbK0bGPWBqEL', previous)
+    diff = account.followed_by_count - previous[-1][today]
     print('update')
     data['account']['diff'] = diff
   return data
@@ -175,21 +186,17 @@ def getlikesncoms():
   'comment_timeline': {}}
   total_likes = 0
   total_comments = 0
-  firebse = firebase.FirebaseApplication('https://covidai-1dd78.firebaseio.com/', None)
-  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/like_timeline/', '')
   medias = instagram.get_medias("covid.ai_tamil", 1000)
   flag = 0
   for x in medias:
     timestamp = x.created_time
     dh_object = datetime.fromtimestamp(timestamp).strftime("%H")
-    # dd_object = date.fromtimestamp(timestamp)
     if(flag == 0):
       data['like_timeline'][dh_object] = x.likes_count
       data['comment_timeline'][dh_object] = x.comments_count
     else:
       data['like_timeline'][dh_object] += x.likes_count
       data['comment_timeline'][dh_object] += x.comments_count  
-    #   result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', today, account.followed_by_count)
     total_likes += x.likes_count
     total_comments += x.comments_count
   data['total_likes'] = total_likes
@@ -210,6 +217,13 @@ def getlatest():
     data['link'] = x.link
   return data
 
+@app.route('/followtimeline')
+def getfollowTimeline():
+  firebse = firebase.FirebaseApplication('https://covidai-1dd78.firebaseio.com/', None)
+  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/-M4jU_aebbK0bGPWBqEL/', '')
+  timeline = { 'Followtimeline': previous }
+  return timeline
+  
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port='8001', debug=True)
