@@ -6,7 +6,9 @@ import requests
 from bs4 import BeautifulSoup
 from igramscraper.instagram import Instagram
 from flask_cors import CORS
-
+from firebase import firebase
+from datetime import date
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -136,16 +138,18 @@ def getigStats():
   data['account']['Number of followers'] = account.followed_by_count
   data['account']['Number of follows'] = account.follows_count
 
-  # total_likes = 0
-  # total_comments = 0
-  # coms = []
-  # medias = instagram.get_medias("covid.ai", 1000)
-  # for x in medias:
-  #     total_likes += x.likes_count
-  #     total_comments += x.comments_count
-  # data['comments'] = coms
-  # data['total_likes'] = total_likes
-  # data['total_comments'] = total_comments
+  today = date.today().strftime("%Y-%m-%d")
+  firebse = firebase.FirebaseApplication('https://covidai-1dd78.firebaseio.com/', None)
+  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', '')
+  da = previous.get(today, '')
+  if(da):
+    diff = account.followed_by_count - previous[today]
+    data['account']['diff'] = diff
+  else:
+    result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', today, account.followed_by_count)
+    diff = account.followed_by_count - previous[today]
+    print('update')
+    data['account']['diff'] = diff
   return data
   
 @app.route('/coms')
@@ -159,6 +163,48 @@ def getcomments():
     for comment in comments['comments']:
         coms.append(comment.text)
   data['comments'] = coms
+  return data
+
+@app.route('/likesncoms')
+def getlikesncoms():
+  instagram = Instagram()
+  data = {'like_timeline': {},
+  'comment_timeline': {}}
+  total_likes = 0
+  total_comments = 0
+  firebse = firebase.FirebaseApplication('https://covidai-1dd78.firebaseio.com/', None)
+  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/like_timeline/', '')
+  medias = instagram.get_medias("covid.ai_tamil", 1000)
+  flag = 0
+  for x in medias:
+    timestamp = x.created_time
+    dh_object = datetime.fromtimestamp(timestamp).strftime("%H")
+    # dd_object = date.fromtimestamp(timestamp)
+    if(flag == 0):
+      data['like_timeline'][dh_object] = x.likes_count
+      data['comment_timeline'][dh_object] = x.comments_count
+    else:
+      data['like_timeline'][dh_object] += x.likes_count
+      data['comment_timeline'][dh_object] += x.comments_count  
+    #   result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', today, account.followed_by_count)
+    total_likes += x.likes_count
+    total_comments += x.comments_count
+  data['total_likes'] = total_likes
+  data['total_comments'] = total_comments
+  return data
+
+@app.route('/latest')
+def getlatest():
+  data = {}
+  instagram = Instagram()
+  medias = instagram.get_medias("covid.ai_tamil", 1)
+  for x in medias:
+    data['created_time'] = x.created_time
+    data['caption'] = x.caption
+    data['likes_count'] = x.likes_count
+    data['comments_count'] = x.comments_count
+    data['image_high_resolution_url'] = x.image_high_resolution_url
+    data['link'] = x.link
   return data
 
 
