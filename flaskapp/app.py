@@ -225,6 +225,7 @@ def getfollowTimeline():
   return timeline
 
 @app.route('/trending', methods=['GET', 'POST'])
+@crossdomain(origin='*')
 def getTrending():
   if request.method == 'POST':
     text = request.form['hashtag']
