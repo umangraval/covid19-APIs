@@ -14,7 +14,7 @@ from datetime import date
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app)
 
 
 langs = ['gu','bn','hi','kn','ta','te','en']
