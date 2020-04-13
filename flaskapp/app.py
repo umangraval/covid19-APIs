@@ -224,15 +224,23 @@ def getfollowTimeline():
   timeline = { 'Followtimeline': previous }
   return timeline
 
-@app.route('/trending', methods=['POST'])
+@app.route('/trending', methods=['GET', 'POST'])
 def getTrending():
-  text = request.form['hashtag']
-  URL_indian = "http://best-hashtags.com/hashtag/"+text
-  r_indian = requests.get(URL_indian) 
+  if request.method == 'POST':
+    text = request.form['hashtag']
+    URL_indian = "http://best-hashtags.com/hashtag/"+text
+    r_indian = requests.get(URL_indian) 
 
-  soup_indian = BeautifulSoup(r_indian.content, 'html.parser') 
-  hashtag_indian = soup_indian.find('p1').getText().split(" ")[1:11]
-  return {"hashtags": hashtag_indian}
+    soup_indian = BeautifulSoup(r_indian.content, 'html.parser') 
+    hashtag_indian = soup_indian.find('p1').getText().split(" ")[1:11]
+    return {"hashtags": hashtag_indian}
+  else:
+    URL_indian = "http://best-hashtags.com/hashtag/corona"
+    r_indian = requests.get(URL_indian) 
 
+    soup_indian = BeautifulSoup(r_indian.content, 'html.parser') 
+    hashtag_indian = soup_indian.find('p1').getText().split(" ")[1:11]
+    return {"hashtags": hashtag_indian}
+    
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port='8001', debug=True)
