@@ -131,7 +131,7 @@ def getITALYStats():
 def getigStats():
   instagram = Instagram()
   data = { 'account': {}}
-  account = instagram.get_account('covid.ai_tamil')
+  account = instagram.get_account('covid.ai_bengali')
   data['account']['id'] = account.identifier
   data['account']['username'] = account.username
   data['account']['Full name'] = account.full_name
@@ -170,7 +170,7 @@ def getcomments():
   instagram = Instagram()
   data = {}
   coms = []
-  medias = instagram.get_medias("covid.ai_tamil", 1000)
+  medias = instagram.get_medias("covid.ai_bengali", 1000)
   for x in medias:
     comments = instagram.get_media_comments_by_id(x.identifier, 10000)
     for comment in comments['comments']:
@@ -185,7 +185,7 @@ def getlikesncoms():
   'comment_timeline': {}}
   total_likes = 0
   total_comments = 0
-  medias = instagram.get_medias("covid.ai_tamil", 1000)
+  medias = instagram.get_medias("covid.ai_bengali", 1000)
   flag = 0
   for x in medias:
     timestamp = x.created_time
@@ -206,7 +206,7 @@ def getlikesncoms():
 def getlatest():
   data = {}
   instagram = Instagram()
-  medias = instagram.get_medias("covid.ai_tamil", 1)
+  medias = instagram.get_medias("covid.ai_bengali", 1)
   for x in medias:
     data['created_time'] = x.created_time
     data['caption'] = x.caption
