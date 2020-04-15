@@ -224,7 +224,6 @@ def getfollowTimeline():
   return timeline
 
 @app.route('/trending/<key>')
-@cross_origin('localhost')
 def getTrending(key):
     text = key
     URL_indian = "http://best-hashtags.com/hashtag/"+text
