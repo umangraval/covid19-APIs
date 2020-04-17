@@ -127,11 +127,11 @@ def getITALYStats():
   retJSON['data'] = data
   return retJSON
 
-@app.route('/covidai')
-def getigStats():
+@app.route('/<username>')
+def getigStats(username):
   instagram = Instagram()
   data = { 'account': {}}
-  account = instagram.get_account('covid.ai_bengali')
+  account = instagram.get_account(username)
   data['account']['id'] = account.identifier
   data['account']['username'] = account.username
   data['account']['Full name'] = account.full_name
@@ -143,34 +143,54 @@ def getigStats():
 
   today = date.today().strftime("%Y-%m-%d")
   firebse = firebase.FirebaseApplication('https://covidai-1dd78.firebaseio.com/', None)
-  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/-M4jU_aebbK0bGPWBqEL/', '')
-  print(previous)
-  flag = 0
+  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/', '')
+  keys = previous.keys()
+  print(keys)
+  newEntry = 0
+  for key in keys:
+    if(username == key):
+      newEntry = 1
+      for sna in previous[key].keys():
+        stamp = sna
+      print(stamp)
+      Dataurl = 'https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/'+username+'/'
+      flag = 0
+      previous = firebse.get(Dataurl+stamp, '')
+      print(previous)
+      da = previous[-1].get(today, '')
+      print(da)
+      if(da):
+        diff = account.followed_by_count - previous[-1][today]
+        data['account']['diff'] = diff
+        flag = 1
+        print(diff)
+        if(diff != 0):
+          previous[-1][today] = account.followed_by_count
+          snap = str(len(previous) - 1)
+          print('diff not')
+          result = firebse.put(Dataurl+stamp, snap, {today:previous[-1][today]}) 
+        break
 
-  da = previous[-1].get(today, '')
-  if(da):
-    diff = account.followed_by_count - previous[-1][today]
-    data['account']['diff'] = diff
-    flag = 1
-    if(diff != 0):
-      previous[-1][today] = account.followed_by_count
-      snap = str(len(previous) - 1)
-      result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/-M4jU_aebbK0bGPWBqEL/', snap, {today:previous[-1][today]}) 
-
-  if(flag == 0):
-    previous.append({ today: account.followed_by_count })
-    result = firebse.put('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/', '-M4jU_aebbK0bGPWBqEL', previous)
-    diff = account.followed_by_count - previous[-1][today]
-    print('update')
-    data['account']['diff'] = diff
+      if(flag == 0):
+        previous.append({ today: account.followed_by_count })
+        result = firebse.put(Dataurl, stamp, previous)
+        diff = account.followed_by_count - previous[-1][today]
+        print('update')
+        data['account']['diff'] = diff
+        break
+  if(newEntry == 0):
+    print('new entry')
+    Dataurl = 'https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/'+username
+    firebse.post(Dataurl, [{today: account.followed_by_count}])
+      
   return data
   
-@app.route('/coms')
-def getcomments():
+@app.route('/<username>/coms')
+def getcomments(username):
   instagram = Instagram()
   data = {}
   coms = []
-  medias = instagram.get_medias("covid.ai_bengali", 1000)
+  medias = instagram.get_medias(username, 1000)
   for x in medias:
     comments = instagram.get_media_comments_by_id(x.identifier, 10000)
     for comment in comments['comments']:
@@ -178,14 +198,14 @@ def getcomments():
   data['comments'] = coms
   return data
 
-@app.route('/likesncoms')
-def getlikesncoms():
+@app.route('/<username>/likesncoms')
+def getlikesncoms(username):
   instagram = Instagram()
   data = {'like_timeline': {},
   'comment_timeline': {}}
   total_likes = 0
   total_comments = 0
-  medias = instagram.get_medias("covid.ai_bengali", 1000)
+  medias = instagram.get_medias(username, 1000)
   flag = 0
   for x in medias:
     timestamp = x.created_time
@@ -202,11 +222,11 @@ def getlikesncoms():
   data['total_comments'] = total_comments
   return data
 
-@app.route('/latest')
-def getlatest():
+@app.route('/<username>/latest')
+def getlatest(username):
   data = {}
   instagram = Instagram()
-  medias = instagram.get_medias("covid.ai_bengali", 1)
+  medias = instagram.get_medias(username, 1)
   for x in medias:
     data['created_time'] = x.created_time
     data['caption'] = x.caption
@@ -216,11 +236,13 @@ def getlatest():
     data['link'] = x.link
   return data
 
-@app.route('/followtimeline')
-def getfollowTimeline():
+@app.route('/<username>/followtimeline')
+def getfollowTimeline(username):
   firebse = firebase.FirebaseApplication('https://covidai-1dd78.firebaseio.com/', None)
-  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/covidaitamil/-M4jU_aebbK0bGPWBqEL/', '')
-  timeline = { 'Followtimeline': previous }
+  previous = firebse.get('https://covidai-1dd78.firebaseio.com/covidai-1dd78/followcount/'+username, '')
+  keys = previous.keys()
+  for key in keys:
+    timeline = { 'Followtimeline': previous[key] }
   return timeline
 
 @app.route('/trending/<key>')
