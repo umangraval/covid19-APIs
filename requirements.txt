@@ -5,5 +5,5 @@ lxml
 bs4
 pathlib
 igramscraper
-python-firebase
+# python-firebase
 gunicorn
