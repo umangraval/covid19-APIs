@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 from igramscraper.instagram import Instagram
 from flask_cors import CORS
-from firebase import firebase
+# from firebase import firebase
 from datetime import date
 from datetime import datetime
 
