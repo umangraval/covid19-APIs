@@ -1,3 +1,13 @@
+
+.heading {
+    height: 800px;
+    display: flex;
+    font-family: Courier;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
 .fa {
     padding: 20px;
     font-size: 30px;
@@ -17,15 +27,3 @@
     color: white;
 }
 
-body {
-    color: white;
-}
-
-.heading {
-    height: 800px;
-    display: flex;
-    font-family: Courier;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}

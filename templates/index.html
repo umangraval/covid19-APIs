@@ -5,22 +5,43 @@
         <link rel="stylesheet" href="/static/index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body  style="background-image: url('/static/247.jpg');">
-        <div class="heading">
-            <center>
-                <img src="/static/photo_2020-03-22_16-36-31.png" style="width: 30%;">
-            </center>
-            <h1>Covid19 Stats</h1>
-            <h2>API's for country statewise</h3>
-            <h3>India: <a href="http://covid19-country-statistics.herokuapp.com/india">http://covid19-country-statistics.herokuapp.com/india</a></h3>
-            <h3>USA: <a href="http://covid19-country-statistics.herokuapp.com/usa">http://covid19-country-statistics.herokuapp.com/usa</a></h3>
-            <h3>Spain: <a href="http://covid19-country-statistics.herokuapp.com/spain">http://covid19-country-statistics.herokuapp.com/spain</a></h3>
-            <h3>Italy: <a href="http://covid19-country-statistics.herokuapp.com/italy">http://covid19-country-statistics.herokuapp.com/italy</a></h3>
-            <h4>Follow @covid.ai on Instagram for stats of coronavirus on India</h2>
-            <!-- Add font awesome icons -->
-            <center>
-                <a href="instagram://user?username=covid.ai" class="fa fa-instagram"></a>
-            </center>
+    <body>
+        <style>
+            body {
+                height: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-image: url('/static/247.jpg');
+            }
+            a {
+                text-decoration: none;
+                color: white;
+            }
+            @media only screen and (max-width: 600px) {
+                body {
+                    background-repeat:repeat-y;
+                    background-image: url('/static/247.jpg');
+                }
+            }
+        </style>
+        <div class="contai">
+            <div class="heading">
+                <center>
+                    <img src="/static/photo_2020-03-22_16-36-31.png" style="width: 25%;">
+                </center>
+                <h1>Covid19 Stats</h1>
+                <h2>API's for country statewise</h3>
+                <h3>India: <a href="http://covid19-country-statistics.herokuapp.com/india">http://covid19-country-statistics.herokuapp.com/india</a></h3>
+                <h3>USA: <a href="http://covid19-country-statistics.herokuapp.com/usa">http://covid19-country-statistics.herokuapp.com/usa</a></h3>
+                <h3>Spain: <a href="http://covid19-country-statistics.herokuapp.com/spain">http://covid19-country-statistics.herokuapp.com/spain</a></h3>
+                <h3>Italy: <a href="http://covid19-country-statistics.herokuapp.com/italy">http://covid19-country-statistics.herokuapp.com/italy</a></h3>
+                <h4>Follow @covid.ai on Instagram for stats of coronavirus on India</h2>
+                <!-- Add font awesome icons -->
+                <center>
+                    <a href="instagram://user?username=covid.ai" class="fa fa-instagram"></a>
+                </center>
+            </div>
         </div>
     </body>
 </html>
